@@ -1,0 +1,58 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "172",
+  "SoundBanks": [
+   {
+    "Id": "1699343283",
+    "Type": "Event",
+    "GUID": "{A8AB530F-BDF5-40E6-A835-2C6166301607}",
+    "Language": "SFX",
+    "Hash": "{4E32BF38-D76D-AAB1-FE8D-2D1B96D594C3}",
+    "ObjectPath": "Play_Music_Menu",
+    "ShortName": "Play_Music_Menu",
+    "Path": "Event/Play_Music_Menu.bnk",
+    "Media": [
+     {
+      "Id": "275325283",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Beatlink_MUS_MainMenu_260331_intro.wav",
+      "Path": "Media/275325283.wem",
+      "CachePath": "67/{67A294EE-6A53-E33F-7BD7-5AD2793700DE}.wem"
+     },
+     {
+      "Id": "564839297",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Beatlink_MUS_MainMenu_260331_loop.wav",
+      "Path": "Media/564839297.wem",
+      "CachePath": "04/{0493C212-5745-4CAB-08F2-9715DF6FA3BF}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1699343283",
+      "Name": "Play_Music_Menu",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Music_Menu",
+      "GUID": "{A8AB530F-BDF5-40E6-A835-2C6166301607}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "275325283"
+       },
+       {
+        "Id": "564839297"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{EF94EA7B-C7AE-498F-501A-6C3AFCE5A71B}"
+ }
+}
