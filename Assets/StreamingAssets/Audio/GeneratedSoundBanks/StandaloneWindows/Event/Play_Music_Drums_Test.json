@@ -1,0 +1,46 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "172",
+  "SoundBanks": [
+   {
+    "Id": "2401325040",
+    "Type": "Event",
+    "GUID": "{C72D493B-0347-4C27-92A0-D70D7CECA388}",
+    "Language": "SFX",
+    "Hash": "{F250F3CF-194A-789D-28BB-AB843FDCB8CB}",
+    "ObjectPath": "Play_Music_Drums_Test",
+    "ShortName": "Play_Music_Drums_Test",
+    "Path": "Event/Play_Music_Drums_Test.bnk",
+    "Media": [
+     {
+      "Id": "45527926",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Musical, Loop, Drums, DnB, Straight, Simple (100 BPM, 4 Bar) SND62696 5.wav",
+      "Path": "Media/45527926.wem",
+      "CachePath": "EC/{EC8E0A5D-B020-3703-11CB-A749E286131F}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2401325040",
+      "Name": "Play_Music_Drums_Test",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Music_Drums_Test",
+      "GUID": "{C72D493B-0347-4C27-92A0-D70D7CECA388}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "45527926"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{468DBFD0-D7C8-F280-9801-2905EAE11399}"
+ }
+}
