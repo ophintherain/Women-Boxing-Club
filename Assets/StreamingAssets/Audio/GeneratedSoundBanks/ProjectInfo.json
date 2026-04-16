@@ -3,7 +3,11 @@
   "Project": {
    "Name": "BeatLink_Wwise",
    "GUID": "{64E8E23C-40A9-4966-AAB8-9845F12A7B07}",
+<<<<<<< HEAD
    "Generator": "2025.1.5.9095"
+=======
+   "Generator": "2025.1.6.9117"
+>>>>>>> Wwise
   },
   "CacheRoot": "../../../../BeatLink_Wwise/.cache",
   "Platforms": [
@@ -12,7 +16,11 @@
     "GUID": "{5AAFD915-1695-45B0-9B4E-E66D7DBBBA0E}",
     "BasePlatform": "Windows",
     "BasePlatformGUID": "{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}",
+<<<<<<< HEAD
     "Path": "StandaloneWindows"
+=======
+    "Path": "Windows"
+>>>>>>> Wwise
    }
   ],
   "Languages": [
@@ -24,6 +32,10 @@
     "UseAsStandIn": "true"
    }
   ],
+<<<<<<< HEAD
   "FileHash": "{065E34A9-05A9-98EB-9102-B76BFD3E1023}"
+=======
+  "FileHash": "{102B13E9-D5FF-99C5-1BE9-897BB2440EBE}"
+>>>>>>> Wwise
  }
 }

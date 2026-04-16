@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: d256b6e131c100c43bb5a9afd68483ca
+=======
+guid: 3abe6f23c7ee0a44e87a6f48f4ee47d8
+>>>>>>> Wwise
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
