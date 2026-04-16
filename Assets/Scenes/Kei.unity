@@ -122,8 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< HEAD
-=======
 --- !u!1 &1525502350
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +282,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> Wwise
 --- !u!1 &1685121436
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,12 +504,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: WwiseGlobal
       objectReference: {fileID: 0}
-<<<<<<< HEAD
-    m_RemovedComponents: []
-=======
     m_RemovedComponents:
     - {fileID: 7341411914381053738, guid: 20d7ac09eb8d4e041aac14a475a183b7, type: 3}
->>>>>>> Wwise
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -523,7 +516,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1685121439}
   - {fileID: 6910689474583595140}
-<<<<<<< HEAD
-=======
   - {fileID: 1525502356}
->>>>>>> Wwise
