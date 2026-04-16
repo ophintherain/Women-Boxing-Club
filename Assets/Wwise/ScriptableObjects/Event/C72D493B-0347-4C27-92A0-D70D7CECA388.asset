@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db32dd6171a782c4485f591e25034730, type: 3}
+  m_Name: C72D493B-0347-4C27-92A0-D70D7CECA388
+  m_EditorClassIdentifier: 
+  objectName: Play_Music_Drums_Test
+  id: 2401325040
+  guid: C72D493B-0347-4C27-92A0-D70D7CECA388
+  IsInUserDefinedSoundBank: 0

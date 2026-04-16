@@ -12,7 +12,11 @@
     "GUID": "{5AAFD915-1695-45B0-9B4E-E66D7DBBBA0E}",
     "BasePlatform": "Windows",
     "BasePlatformGUID": "{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}",
+<<<<<<< HEAD
     "Path": "StandaloneWindows"
+=======
+    "Path": "Windows"
+>>>>>>> origin/Wwise
    }
   ],
   "Languages": [
@@ -24,6 +28,10 @@
     "UseAsStandIn": "true"
    }
   ],
+<<<<<<< HEAD
   "FileHash": "{065E34A9-05A9-98EB-9102-B76BFD3E1023}"
+=======
+  "FileHash": "{0BB0FFAE-A179-31DF-C78F-921274D370D4}"
+>>>>>>> origin/Wwise
  }
 }
