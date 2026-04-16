@@ -1,30 +1,37 @@
 using UnityEngine;
+using System;
 
 public class BeatManager : MonoBehaviour
 {
     public static BeatManager Instance;
 
-    public AudioSource audioSource;
-    public float bpm = 120f;
-
-    private double _startTime;
-    private double _beatInterval;
+    // 存储从 Wwise 回调传回的实时节拍数据
+    private double _lastBeatDspTime;
+    private double _beatInterval; 
 
     void Awake() => Instance = this;
 
-    void Start()
+    // 当 AudioManager 播放音乐时，确保包含这个回调
+    public void InitBeatData(float bpm)
     {
         _beatInterval = 60d / bpm;
-        _startTime = AudioSettings.dspTime;
-        audioSource.Play();
+        _lastBeatDspTime = AudioSettings.dspTime;
     }
 
-    public double GetCurrentBeat() => (AudioSettings.dspTime - _startTime) / _beatInterval;
+    // Wwise 每跳一拍，都会触发这个由 AudioManager 传过来的函数
+    public void OnWwiseBeatFired()
+    {
+        _lastBeatDspTime = AudioSettings.dspTime;
+        // Debug.Log("节拍对齐！");
+    }
 
-    // 返回当前偏移量：负数=按早了，正数=按晚了
     public float GetBeatOffset()
     {
-        double currentBeat = GetCurrentBeat();
-        return (float)(currentBeat - System.Math.Round(currentBeat));
+        double elapsed = AudioSettings.dspTime - _lastBeatDspTime;
+        // 算出当前时间距离上一拍和下一拍哪个更近
+        double offset = elapsed / _beatInterval;
+        if (offset > 0.5) offset -= 1.0; 
+
+        return (float)offset;
     }
 }
