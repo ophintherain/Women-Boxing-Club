@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: zhujuequanji_SkeletonData
+  m_Name: MCdaily_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 1918d3da7f962754793194a4c688e680, type: 2}
+  - {fileID: 11400000, guid: 532e0ea3b5beeb141a7e5101107ffdb1, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 3f159a9594eab614d8bb8627c6309d7e, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: e02dd4a3b66e9ef4483ee92890519a98, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0

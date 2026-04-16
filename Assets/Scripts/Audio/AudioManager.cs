@@ -1,368 +1,106 @@
-using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Audio;
+// using System;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
 
-[Serializable]
-public class AudioInfo
-{
-    public string audioName;
-    public AudioSource audioSource;
-}
+// [Serializable]
+// public class AudioInfoWwise
+// {
+//     public string audioName;
+//     public uint playingID; // Wwise 播放 ID
+// }
 
-public class AudioManager : SingletonPersistent<AudioManager>
-{
-    // 存储所有BGM的音频信息
-    public List<AudioInfo> bgmAudioInfoList;
+// public class AudioManager : SingletonPersistent<AudioManager>
+// {
+//     public List<AudioInfoWwise> bgmInfoList = new List<AudioInfoWwise>();
+//     public List<AudioInfoWwise> sfxInfoList = new List<AudioInfoWwise>();
 
-    // 存储所有SFX的音频信息
-    public List<AudioInfo> sfxAudioInfoList;
+//     // 对应 Wwise 中的 RTPC 参数名称
+//     private const string MAIN_VOLUME_RTPC = "MainVolume";
+//     private const string BGM_VOLUME_RTPC = "BGMVolume";
+//     private const string SFX_VOLUME_RTPC = "SFXVolume";
 
-    // 音量控制全局音量
-    public float mainVolume;
+//     protected override void Awake()
+//     {
+//         base.Awake();
+//         // 初始化音量（如果 Wwise 项目中设置了这些 RTPC）
+//         float main = PlayerPrefs.GetFloat("MainVolume", 100f);
+//         ChangeMainVolume(main);
+//     }
 
-    // BGM音量因子，实际音量 = mainVolume * bgmVolumeFactor
-    public float bgmVolumeFactor;
+//     private void Start()
+//     {
+//         // 初始播放指定的 BGM
+//         PlayBgm("Play_Music_Drums_Test");
+//     }
 
-    // SFX音量因子，实际音量 = mainVolume * sfxVolumeFactor
-    public float sfxVolumeFactor;
+//     /// <summary>
+//     /// 播放 BGM (Wwise Event)
+//     /// </summary>
+//     public void PlayBgm(string eventName)
+//     {
+//         // 如果正在播放相同的 BGM，可以根据需求选择是否跳过
+//         if (bgmInfoList.Exists(x => x.audioName == eventName)) return;
 
-    // 音频资源的根节点
-    public AudioDatas audioDatas;
-
-    private GameObject _bgmSourcesRootGO;
-    private GameObject _sfxSourcesRootGO;
-
-    // 引用AudioMixer
-    public AudioMixer audioMixer;
-
-    // 暴露参数名称
-    private const string BGM_VOLUME_PARAM = "BGM";
-    private const string SFX_VOLUME_PARAM = "Sfx";
-    
-    protected override void Awake()
-    {
-        base.Awake();
-
-        // 创建BGM和SFX的AudioSource根节点
-        _bgmSourcesRootGO = new GameObject("BGM_ROOT");
-        _sfxSourcesRootGO = new GameObject("SFX_ROOT");
-
-        _bgmSourcesRootGO.transform.SetParent(transform);
-        _sfxSourcesRootGO.transform.SetParent(transform);
-
-        // 加载存储的音量设置
-        mainVolume = PlayerPrefs.GetFloat("MainVolume", 1f);
-        bgmVolumeFactor = PlayerPrefs.GetFloat("BgmVolumeFactor", .8f);
-        sfxVolumeFactor = PlayerPrefs.GetFloat("SfxVolumeFactor", .8f);
-    }
-
-    private void Start()
-    {
-        // 初始化AudioMixer的音量
-        ChangeBgmVolume(bgmVolumeFactor);
-        ChangeSfxVolume(sfxVolumeFactor);
-    }
-
-
-    /// <summary>
-    /// 播放BGM
-    /// </summary>
-    public void PlayBgm(string fadeInMusicName, string fadeOutMusicName = "", float fadeInDuration = 0.5f, float fadeOutDuration = 0.5f, bool loop = true)
-    {
-        Sequence s = DOTween.Sequence();
-
-        // 如果需要淡出某个BGM
-        if (fadeOutMusicName != "")
-        {
-            AudioInfo fadeOutInfo = bgmAudioInfoList.Find(x => x.audioName == fadeOutMusicName);
-
-            if (fadeOutInfo == null)
-            {
-                Debug.LogWarning("未找到BGM：" + fadeOutMusicName);
-                return;
-            }
-
-            s.Append(fadeOutInfo.audioSource.DOFade(0, fadeOutDuration).OnComplete(() =>
-            {
-                fadeOutInfo.audioSource.Pause();
-            }));
-        }
-
-        // 检查是否已存在需要播放的BGM
-        AudioInfo audioInfo = bgmAudioInfoList.Find(x => x.audioName == fadeInMusicName);
-
-        if (audioInfo != null)
-        {
-            s.Append(audioInfo.audioSource.DOFade(mainVolume * bgmVolumeFactor, fadeInDuration).OnComplete(() =>
-            {
-                audioInfo.audioSource.Play();
-            }));
-            return;
-        }
-
-        // 从资源加载并播放新的BGM
-        AudioData fadeInData = audioDatas.audioDataList.Find(x => x.audioName == fadeInMusicName);
-
-        if (fadeInData == null)
-        {
-            Debug.LogWarning("未找到BGM：" + fadeInMusicName);
-            return;
-        }
-
-        GameObject fadeInAudioGO = new GameObject(fadeInMusicName);
-        fadeInAudioGO.transform.SetParent(_bgmSourcesRootGO.transform);
-
-        AudioSource fadeInAudioSource = fadeInAudioGO.AddComponent<AudioSource>();
-        fadeInAudioSource.clip = Resources.Load<AudioClip>(fadeInData.audioPath);
-        fadeInAudioSource.loop = loop;
-        fadeInAudioSource.volume = fadeInDuration > 0 ? 0 : mainVolume * bgmVolumeFactor;
+//         // PostEvent 返回一个 PlayingID
+//         uint id = AkSoundEngine.PostEvent(eventName, gameObject);
         
-        fadeInAudioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[1]; // 设置为音频混合器的 "Master" 组，确保应用音量控制
-        
-        fadeInAudioSource.Play();
+//         if (id != AkSoundEngine.AK_INVALID_PLAYING_ID)
+//         {
+//             bgmInfoList.Add(new AudioInfoWwise { audioName = eventName, playingID = id });
+//             Debug.Log($"Wwise BGM Started: {eventName}");
+//         }
+//     }
 
-        if (fadeInDuration > 0)
-        {
-            s.Append(fadeInAudioSource.DOFade(mainVolume * bgmVolumeFactor, fadeInDuration));
-        }
+//     /// <summary>
+//     /// 停止 BGM
+//     /// </summary>
+//     public void StopBgm(string eventName, int fadeMs = 500)
+//     {
+//         var info = bgmInfoList.Find(x => x.audioName == eventName);
+//         if (info != null)
+//         {
+//             // 使用 ExecuteActionOnEvent 来实现停止和淡出
+//             AkSoundEngine.ExecuteActionOnEvent(eventName, AkActionOnEventType.AkActionOnEventType_Stop, gameObject, fadeMs, AkCurveInterpolation.AkCurveInterpolation_Linear);
+//             bgmInfoList.Remove(info);
+//         }
+//     }
 
-        AudioInfo info = new AudioInfo
-        {
-            audioName = fadeInMusicName,
-            audioSource = fadeInAudioSource
-        };
+//     /// <summary>
+//     /// 播放音效
+//     /// </summary>
+//     public void PlaySfx(string eventName)
+//     {
+//         uint id = AkSoundEngine.PostEvent(eventName, gameObject);
+//         if (id != AkSoundEngine.AK_INVALID_PLAYING_ID)
+//         {
+//             AudioInfoWwise info = new AudioInfoWwise { audioName = eventName, playingID = id };
+//             sfxInfoList.Add(info);
+//             // 监控音效结束以清理列表
+//             StartCoroutine(WaitSfxEnd(id, info));
+//         }
+//     }
 
-        bgmAudioInfoList.Add(info);
-        StartCoroutine(DetectingAudioPlayState(info, true));
-    }
-    
-    /// <summary>
-    /// 暂停BGM
-    /// </summary>
-    /// <param name="pauseBgmName">要暂停的片段名称</param>
-    /// <param name="fadeOutDuration">淡出间隔</param>
-    public void PauseBgm(string pauseBgmName, float fadeOutDuration = 0.5f)
-    {
-        AudioInfo audioInfo = bgmAudioInfoList.Find(x => x.audioName == pauseBgmName);
+//     // 监控播放结束的简易协程
+//     private IEnumerator WaitSfxEnd(uint playingID, AudioInfoWwise info)
+//     {
+//         // 注意：Wwise 建议通过 Callback 监控，这里是简单的逻辑示意
+//         yield return new WaitForSeconds(1.0f); // 这是一个占位，实际建议用 Callback
+//         sfxInfoList.Remove(info);
+//     }
 
-        if (audioInfo == null)
-        {
-            Debug.LogWarning("未找到BGM：" + pauseBgmName);
-            return;
-        }
+//     /// <summary>
+//     /// 修改全局音量 (通过 RTPC)
+//     /// </summary>
+//     public void ChangeMainVolume(float value)
+//     {
+//         // 假设 Wwise RTPC 范围是 0-100
+//         AkSoundEngine.SetRTPCValue(MAIN_VOLUME_RTPC, value);
+//         PlayerPrefs.SetFloat("MainVolume", value);
+//     }
 
-        Sequence s = DOTween.Sequence();
-
-        s.Append(audioInfo.audioSource.DOFade(0, fadeOutDuration).OnComplete(() =>
-        {
-            audioInfo.audioSource.Pause();
-        }));
-    }
-
-
-    /// <summary>
-    /// 停止BGM
-    /// </summary>
-    /// <param name="stopBgmName">要停止的片段名称</param>
-    /// <param name="fadeOutDuration">淡出间隔</param>
-    public void StopBgm(string stopBgmName, float fadeOutDuration = 0.5f)
-    {
-        AudioInfo audioInfo = bgmAudioInfoList.Find(x => x.audioName == stopBgmName);
-
-        if (audioInfo == null)
-        {
-            Debug.LogWarning("未找到BGM：" +  stopBgmName);
-            return;
-        }
-
-        Sequence s = DOTween.Sequence();
-
-        s.Append(audioInfo.audioSource.DOFade(0, fadeOutDuration).OnComplete(() =>
-        {
-            audioInfo.audioSource.Stop();
-
-            Destroy(audioInfo.audioSource.gameObject);
-        }));
-
-        bgmAudioInfoList.Remove(audioInfo);
-
-    }
-    
-    /// <summary>
-    /// 停止播放所有BGM
-    /// </summary>
-    /// <param name="fadeOutDuration">淡出间隔</param>
-    public void StopAllBGM(float fadeOutDuration = 0.5f)
-    {
-        foreach (var bgmInfo in bgmAudioInfoList.ToArray())
-        {
-            StopBgm(bgmInfo.audioName, fadeOutDuration);
-        }
-        StopAllCoroutines();
-    }
-
-    /// <summary>
-    /// 播放音效
-    /// </summary>
-    /// <param name="sfxName">要播放的音效片段名称</param>
-    /// <param name="loop">是否循环</param>
-    public void PlaySfx(string sfxName, bool loop = false)
-    {
-        Sequence s = DOTween.Sequence();
-
-        // 从音频列表中寻找
-        AudioData sfxData = audioDatas.audioDataList.Find(x => x.audioName == sfxName);
-
-        if (sfxData == null)
-        {
-            Debug.LogWarning("未找到sfx：" + sfxName);
-            return;
-        }
-
-        // 创建音频播放器
-        GameObject sfxAudioGO = new GameObject(sfxName);
-        sfxAudioGO.transform.SetParent(_sfxSourcesRootGO.transform);
-
-        AudioSource sfxAudioSource = sfxAudioGO.AddComponent<AudioSource>();
-        sfxAudioSource.clip = Resources.Load<AudioClip>(sfxData.audioPath);
-        sfxAudioSource.loop = loop;
-        
-        sfxAudioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[2]; // 设置为音频混合器的 "Master" 组，确保应用音量控制
-
-        sfxAudioSource.Play();
-
-        AudioInfo info = new AudioInfo();
-        info.audioName = sfxName;
-        info.audioSource = sfxAudioSource;
-        sfxAudioInfoList.Add(info);
-
-        StartCoroutine(DetectingAudioPlayState(info, false));
-    }
-
-    /// <summary>
-    /// 暂停音效
-    /// </summary>
-    /// <param name="pauseSfxName">要暂停的音效名称</param>
-    public void PauseSfx(string pauseSfxName)
-    {
-        AudioInfo audioInfo = sfxAudioInfoList.Find(x => x.audioName == pauseSfxName);
-
-        if (audioInfo == null)
-        {
-            Debug.LogWarning("未找到sfx：" + pauseSfxName);
-            return;
-        }
-
-        audioInfo.audioSource.Pause();
-    }
-    
-    /// <summary>
-    /// 停止音效
-    /// </summary>
-    /// <param name="stopSfxName">要停止的音效名称</param>
-    public void StopSfx(string stopSfxName)
-    {
-        AudioInfo audioInfo = bgmAudioInfoList.Find(x => x.audioName == stopSfxName);
-
-        if (audioInfo == null)
-        {
-            Debug.LogWarning("未找到sfx：" + stopSfxName);
-            return;
-        }
-
-        audioInfo.audioSource.Stop();
-
-        bgmAudioInfoList.Remove(audioInfo);
-
-        Destroy(audioInfo.audioSource.gameObject);
-    }
-
-    /// <summary>
-    /// 修改全局音量，并保存到PlayerPrefs
-    /// </summary>
-    /// <param name="volume">新的全局音量</param>
-    public void ChangeMainVolume(float volume)
-    {
-        mainVolume = volume;
-        PlayerPrefs.SetFloat("MainVolume", mainVolume);
-
-        foreach (var info in bgmAudioInfoList)
-        {
-            info.audioSource.volume = mainVolume * bgmVolumeFactor;
-        }
-        foreach (var info in sfxAudioInfoList)
-        {
-            info.audioSource.volume = mainVolume * sfxVolumeFactor;
-        }
-        Debug.Log($"MainVolume changed to {mainVolume}");
-    }
-
-    /// <summary>
-    /// 修改BGM音量并使用AudioMixer控制音量
-    /// </summary>
-    public void ChangeBgmVolume(float factor)
-    {
-        bgmVolumeFactor = factor;
-        
-        bgmVolumeFactor = Mathf.Clamp(bgmVolumeFactor, 0f, 1f);
-
-        PlayerPrefs.SetFloat("BgmVolumeFactor", bgmVolumeFactor);
-        
-        if (bgmVolumeFactor == 0)
-        {
-            audioMixer.SetFloat(BGM_VOLUME_PARAM, -80f);
-        }
-        else
-        {
-            audioMixer.SetFloat(BGM_VOLUME_PARAM, Mathf.Log10(mainVolume * bgmVolumeFactor) * 20);
-        }
-    }
-
-    /// <summary>
-    /// 修改音效音量并使用AudioMixer控制音量
-    /// </summary>
-    public void ChangeSfxVolume(float factor)
-    {
-        sfxVolumeFactor = factor;
-        
-        sfxVolumeFactor = Mathf.Clamp(sfxVolumeFactor, 0f, 1f);
-
-        PlayerPrefs.SetFloat("SfxVolumeFactor", sfxVolumeFactor);
-
-        // 如果因子为0，则设置为非常小的音量接近静音
-        if (sfxVolumeFactor == 0)
-        {
-            audioMixer.SetFloat(SFX_VOLUME_PARAM, -80f);
-        }
-        else
-        {
-            audioMixer.SetFloat(SFX_VOLUME_PARAM, Mathf.Log10(mainVolume * sfxVolumeFactor) * 20);
-        }
-    }
-
-
-    /// <summary>
-    /// 检测音频播放状态并清理结束播放的音频资源
-    /// </summary>
-    IEnumerator DetectingAudioPlayState(AudioInfo info, bool isBgm)
-    {
-        AudioSource audioSource = info.audioSource;
-        while (audioSource.isPlaying)
-        {
-            yield return null;
-        }
-        if (isBgm)
-        {
-            bgmAudioInfoList.Remove(info);
-        }
-        else
-        {
-            sfxAudioInfoList.Remove(info);
-        }
-
-        Destroy(info.audioSource.gameObject);
-    }
-}
+//     public void ChangeBgmVolume(float value)
+//     {
+//         AkSoundEngine.SetRTPCValue(BGM_VOLUME_RTPC, value);
+//     }
+// }

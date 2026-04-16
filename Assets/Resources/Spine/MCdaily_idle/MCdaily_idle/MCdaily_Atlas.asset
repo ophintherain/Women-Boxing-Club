@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: zhujuequanji_Atlas
+  m_Name: MCdaily_Atlas
   m_EditorClassIdentifier: 
   textureLoadingMode: 0
   onDemandTextureLoader: {fileID: 0}
-  atlasFile: {fileID: 4900000, guid: c55797d17743e2e4b9ef96faa25fabfb, type: 3}
+  atlasFile: {fileID: 4900000, guid: 3e654c1f4a712b74fa2808e7ef746978, type: 3}
   materials:
-  - {fileID: 2100000, guid: f729798681c260e4da209c9bc77619d0, type: 2}
+  - {fileID: 2100000, guid: 553c333d145af224787008046ca8de64, type: 2}
