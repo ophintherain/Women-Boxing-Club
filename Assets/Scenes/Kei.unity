@@ -163,7 +163,7 @@ MonoBehaviour:
   data:
     idInternal: 0
     valueGuidInternal: 
-    WwiseObjectReference: {fileID: 11400000, guid: 43b307f6b1a23834d9aa08d0c7e9f591, type: 2}
+    WwiseObjectReference: {fileID: 11400000, guid: b1c17796d2b8f02429c7f64670c077da, type: 2}
   useCallbacks: 0
   stopSoundOnDestroy: 1
   Callbacks: []
@@ -504,7 +504,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: WwiseGlobal
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7341411914381053738, guid: 20d7ac09eb8d4e041aac14a475a183b7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
